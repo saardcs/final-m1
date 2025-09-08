@@ -132,10 +132,10 @@ for question_id, (num1, num2) in lcm_questions.items():
     correct_multiples_num2 = get_multiples(num2, lcm)
     
     # Input for multiples of num1
-    multiples_num1 = st.text_area(f"Enter the multiples of {num1} up to LCM ({lcm}) (comma-separated):", key=f"multiples_num1_{question_id}")
+    multiples_num1 = st.text_area(f"Enter the multiples of {num1} (comma-separated):", key=f"multiples_num1_{question_id}")
     
     # Input for multiples of num2
-    multiples_num2 = st.text_area(f"Enter the multiples of {num2} up to LCM ({lcm}) (comma-separated):", key=f"multiples_num2_{question_id}")
+    multiples_num2 = st.text_area(f"Enter the multiples of {num2} (comma-separated):", key=f"multiples_num2_{question_id}")
     
     # Input for LCM guess
     lcm_guess = st.text_input(f"Enter your guess for the LCM of {num1} and {num2}:", key=f"lcm_guess_{question_id}")
@@ -147,15 +147,15 @@ for question_id, (num1, num2) in lcm_questions.items():
     }
     user_lcm_guess = lcm_guess.strip()
 
-    # Grading multiples
-    multiples_correct = set(user_multiples["num1"]) == set(correct_multiples_num1) and \
-                        set(user_multiples["num2"]) == set(correct_multiples_num2)
+    # Grading multiples (check if all multiples are valid up to the LCM)
+    multiples_num1_valid = all(m in correct_multiples_num1 for m in user_multiples["num1"])
+    multiples_num2_valid = all(m in correct_multiples_num2 for m in user_multiples["num2"])
     
     # Grading the LCM guess
     lcm_correct = user_lcm_guess == str(lcm)
     
     # Calculate points
-    points_for_multiples = 2 if multiples_correct else 0
+    points_for_multiples = 2 if multiples_num1_valid and multiples_num2_valid else 0
     points_for_lcm = 3 if lcm_correct else 0
     
     total_score += points_for_multiples + points_for_lcm
@@ -170,7 +170,7 @@ for question_id, (num1, num2) in lcm_questions.items():
     # Provide feedback for each question
     st.write(f"---\nQuestion {question_id}:")
     
-    if multiples_correct:
+    if multiples_num1_valid and multiples_num2_valid:
         st.success(f"Multiples for {num1} and {num2} are correct! +2 points")
     else:
         st.warning(f"One or both sets of multiples are incorrect.")
@@ -405,6 +405,7 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
 
 
