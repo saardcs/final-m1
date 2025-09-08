@@ -261,7 +261,8 @@ with col1:
     # Display provided binary values for the first rows (disable the inputs)
     for i, decimal_value in enumerate(decimal_values[:5]):
         # Use disabled text inputs to keep height alignment
-        st.text_input(f"{decimal_value}", value=provided_binaries[i], disabled=True)#, label_visibility="collapsed")
+        unique_key = f"q20_{decimal_values[idx]}_{idx}"
+        st.text_input(f"{decimal_value}", value=provided_binaries[i], disabled=True, key=unique_key)#, label_visibility="collapsed")
     
     # Input fields for the last rows (user can fill in the binary values)
     binary_inputs_q20 = []
@@ -292,6 +293,7 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
 
 
