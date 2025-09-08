@@ -242,11 +242,13 @@ binary_q19 = st.text_input("Binary result for 21:", placeholder="Enter binary nu
 st.write("20. Convert each decimal number into a 7-bit binary number to complete the image.")
 
 # Decimals with partial conversions provided (first 3 rows fixed)
-decimal_values = [14, 28, 56, 127, 14, 28, 56, 112]
+decimal_values = [0, 54, 127, 127, 127, 62, 28, 8]
 provided_binaries = [
-    format(14, '07b'),
-    format(28, '07b'),
-    format(56, '07b'),
+    format(0, '07b'),
+    format(54, '07b'),
+    format(127, '07b'),
+    format(127, '07b'),
+    format(127, '07b'),
     "", "", "", "", ""
 ]
 
@@ -290,6 +292,7 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
 
 
