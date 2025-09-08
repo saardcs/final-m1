@@ -242,11 +242,12 @@ binary_q19 = st.text_input("Binary result for 21:", placeholder="Enter binary nu
 st.write("20. Convert each decimal number into a 7-bit binary number to complete the image.")
 
 # Decimals with partial conversions provided (first 3 rows fixed)
-decimal_values = [0, 54, 127, 127, 127, 62, 28, 8]
+decimal_values = [93, 93, 0, 85, 54, 8, 8]
 provided_binaries = [
+    format(93, '07b'),
+    format(93, '07b'),
     format(0, '07b'),
-    format(54, '07b'),
-    "", "", "", "", "", ""
+    "", "", "", ""
 ]
 
 # Inputs for last 5 binaries (Q20) — keys q20_4 to q20_8 for last five rows (indices 3 to 7)
@@ -256,14 +257,14 @@ col1, col2 = st.columns([1.1, 7])
 
 with col1:
     # Display provided binary values for the first rows (disable the inputs)
-    for idx, decimal_value in enumerate(decimal_values[:2]):
+    for idx, decimal_value in enumerate(decimal_values[:3]):
         # Use disabled text inputs to keep height alignment
         unique_key = f"q20_{decimal_values[idx]}_{idx}"
         st.text_input(f"{decimal_value}", value=provided_binaries[i], disabled=True, key=unique_key)#, label_visibility="collapsed")
     
     # Input fields for the last rows (user can fill in the binary values)
     binary_inputs_q20 = []
-    for idx in range(2, 8):
+    for idx in range(3, 7):
         # Ensure that the key is unique by including both the decimal value and its index
         unique_key = f"q20_{decimal_values[idx]}_{idx}"  # Add the index to make the key unique
         binary_input = st.text_input(f"{decimal_values[idx]}", key=unique_key)
@@ -271,7 +272,7 @@ with col1:
 
 def decode_binary_to_image(bin_list):
     """Convert list of 8 binary strings (8-bit each) into a 8x8 numpy array (pixels)"""
-    pixels = np.zeros((8, 7))
+    pixels = np.zeros((7, 7))
     for i, b in enumerate(bin_list):
         if len(b) == 7 and all(c in '01' for c in b):
             pixels[i] = np.array([int(bit) for bit in b])
@@ -280,7 +281,7 @@ def decode_binary_to_image(bin_list):
     return pixels
 
 # Combine the provided and user inputs (use user inputs for rows 4 to 8)
-full_binary_list = provided_binaries[:2] + binary_inputs_q20
+full_binary_list = provided_binaries[:3] + binary_inputs_q20
 img_pixels = decode_binary_to_image(full_binary_list)
 
 with col2:
@@ -290,6 +291,7 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
 
 
