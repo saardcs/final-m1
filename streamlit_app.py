@@ -277,7 +277,7 @@ with cols[0]:
 with cols[1]:
     st.button("Remove last step", on_click=remove_last_div2_step_q18, key="remove_div2_step_q18")
 
-binary_q18 = st.text_input("Binary result for 9:", placeholder="Enter binary number (e.g., 1001)", key="binary_q18")
+binary_q18 = st.text_input("Binary result for 9:", placeholder="Enter binary number (e.g., 0010)", key="binary_q18")
 
 
 # Q19 - Decimal 21 to binary
@@ -327,7 +327,7 @@ with cols[0]:
 with cols[1]:
     st.button("Remove last step", on_click=remove_last_div2_step_q19, key="remove_div2_step_q19")
 
-binary_q19 = st.text_input("Binary result for 21:", placeholder="Enter binary number (e.g., 10101)", key="binary_q19")
+binary_q19 = st.text_input("Binary result for 21:", placeholder="Enter binary number (e.g., 0010)", key="binary_q19")
 
 
 # Q20: Convert each decimal number into a 7-bit binary number to complete the image.
@@ -415,7 +415,7 @@ if st.button("Submit Test"):
             "student_number": student_number,
             
             "answers": {
-                "sudoku": [st.session_state.get("board4x4", ""), st.session_state.get("board6x6", "")],
+                "sudoku": [board_4x4, board_6x6],
 
                 "blocks": {
                     # Tower inputs (6 towers × 3 blocks)
@@ -524,6 +524,7 @@ if st.button("Submit Test"):
                 file_name=os.path.basename(json_path),
                 mime="application/json"
             )
+
 
 
 
