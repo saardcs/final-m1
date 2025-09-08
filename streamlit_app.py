@@ -145,48 +145,39 @@ for question_id, (num1, num2) in lcm_questions.items():
         "num1": [int(x.strip()) for x in multiples_num1.split(",") if x.strip().isdigit()],
         "num2": [int(x.strip()) for x in multiples_num2.split(",") if x.strip().isdigit()],
     }
-    user_lcm_guess = lcm_guess.strip()
+
+    try:
+        user_lcm_guess = int(lcm_guess)
+    except:
+        user_lcm_guess = -1
 
     # Check if the LCM is listed in either of the multiples
     lcm_correct = str(lcm) in [str(x) for x in user_multiples["num1"]] or str(lcm) in [str(x) for x in user_multiples["num2"]]
     
     # Grading the LCM guess
-    lcm_guess_correct = user_lcm_guess == str(lcm)
+    lcm_guess_correct = user_lcm_guess == lcm
     
-    # Points for listing multiples (must include the LCM in either list)
-    points_for_multiples = 2 if lcm_correct else 0
-    points_for_lcm = 3 if lcm_guess_correct else 0
+#     # Provide feedback for each question
+#     st.write(f"---\nQuestion {question_id}:")
     
-    total_score += points_for_multiples + points_for_lcm
+#     if lcm_correct:
+#         st.success(f"Your multiples include the LCM! +2 points")
+#     else:
+#         st.warning(f"Your multiples do not include the LCM. The LCM is {lcm}.")
     
-    # Store individual question score
-    question_scores[question_id] = {
-        "multiples_correct": points_for_multiples,
-        "lcm_correct": points_for_lcm,
-        "total": points_for_multiples + points_for_lcm
-    }
+#     if lcm_guess_correct:
+#         st.success(f"Your LCM guess is correct! +3 points")
+#     else:
+#         st.warning(f"Your LCM guess is incorrect. The correct LCM is {lcm}.")
 
-    # Provide feedback for each question
-    st.write(f"---\nQuestion {question_id}:")
-    
-    if lcm_correct:
-        st.success(f"Your multiples include the LCM! +2 points")
-    else:
-        st.warning(f"Your multiples do not include the LCM. The LCM is {lcm}.")
-    
-    if lcm_guess_correct:
-        st.success(f"Your LCM guess is correct! +3 points")
-    else:
-        st.warning(f"Your LCM guess is incorrect. The correct LCM is {lcm}.")
+# # Show the total score
+# st.write(f"---\nTotal Score: {total_score} / 15")
 
-# Show the total score
-st.write(f"---\nTotal Score: {total_score} / 15")
-
-# Show detailed scores for each question
-for question_id, scores in question_scores.items():
-    st.write(f"Question {question_id}: {scores['total']} points")
-    st.write(f"  - Multiples: {scores['multiples_correct']} points")
-    st.write(f"  - LCM Guess: {scores['lcm_correct']} points")
+# # Show detailed scores for each question
+# for question_id, scores in question_scores.items():
+#     st.write(f"Question {question_id}: {scores['total']} points")
+#     st.write(f"  - Multiples: {scores['multiples_correct']} points")
+#     st.write(f"  - LCM Guess: {scores['lcm_correct']} points")
 
 
 
@@ -404,6 +395,7 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
 
 
