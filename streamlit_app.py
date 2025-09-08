@@ -253,13 +253,6 @@ with cols[1]:
 
 cols = st.columns([1.1, 7])
 with cols[0]:
-    binary_18 = st.text_input("Answer", key="bin_19")
-st.write("")  # blank line
-st.write("")  # another blank line
-
-
-cols = st.columns([1.1, 7])
-with cols[0]:
     binary_19 = st.text_input("Answer", key="bin_19")
 
 st.write("")
@@ -318,3 +311,4 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
