@@ -96,6 +96,108 @@ for qnum in questions_7_10:
 
 # LCM
 
+# Part IV: Lowest Common Multiple (5pts)
+st.header("Part IV: Lowest Common Multiple (5pts)")
+st.write("**Instruction:** Given the two numbers, find the LCM (Lowest Common Multiple) using the Listing Method.")
+
+# LCM Questions (Question ID: (num1, num2))
+lcm_questions = {
+    11: (3, 8),
+    12: (3, 12),
+    13: (8, 9),
+}
+
+# Function to get multiples of a number up to the LCM
+def get_multiples(num, lcm):
+    multiples = []
+    i = 1
+    while num * i <= lcm:
+        multiples.append(num * i)
+        i += 1
+    return multiples
+
+# Initialize total score
+total_score = 0
+question_scores = {}
+
+# Iterate over each question
+for question_id, (num1, num2) in lcm_questions.items():
+    st.write(f"Question {question_id}: Find the LCM of **{num1}** and **{num2}**.")
+    
+    # Calculate the correct LCM
+    lcm = np.lcm(num1, num2)
+    
+    # Get the correct multiples for both numbers up to the LCM
+    correct_multiples_num1 = get_multiples(num1, lcm)
+    correct_multiples_num2 = get_multiples(num2, lcm)
+    
+    # Input for multiples of num1
+    multiples_num1 = st.text_area(f"Enter the multiples of {num1} up to LCM ({lcm}) (comma-separated):", key=f"multiples_num1_{question_id}")
+    
+    # Input for multiples of num2
+    multiples_num2 = st.text_area(f"Enter the multiples of {num2} up to LCM ({lcm}) (comma-separated):", key=f"multiples_num2_{question_id}")
+    
+    # Input for LCM guess
+    lcm_guess = st.text_input(f"Enter your guess for the LCM of {num1} and {num2}:", key=f"lcm_guess_{question_id}")
+    
+    # Store user inputs
+    user_multiples = {
+        "num1": [int(x.strip()) for x in multiples_num1.split(",") if x.strip().isdigit()],
+        "num2": [int(x.strip()) for x in multiples_num2.split(",") if x.strip().isdigit()],
+    }
+    user_lcm_guess = lcm_guess.strip()
+
+    # Grading multiples
+    multiples_correct = set(user_multiples["num1"]) == set(correct_multiples_num1) and \
+                        set(user_multiples["num2"]) == set(correct_multiples_num2)
+    
+    # Grading the LCM guess
+    lcm_correct = user_lcm_guess == str(lcm)
+    
+    # Calculate points
+    points_for_multiples = 2 if multiples_correct else 0
+    points_for_lcm = 3 if lcm_correct else 0
+    
+    total_score += points_for_multiples + points_for_lcm
+    
+    # Store individual question score
+    question_scores[question_id] = {
+        "multiples_correct": points_for_multiples,
+        "lcm_correct": points_for_lcm,
+        "total": points_for_multiples + points_for_lcm
+    }
+
+    # Provide feedback for each question
+    st.write(f"---\nQuestion {question_id}:")
+    
+    if multiples_correct:
+        st.success(f"Multiples for {num1} and {num2} are correct! +2 points")
+    else:
+        st.warning(f"One or both sets of multiples are incorrect.")
+    
+    if lcm_correct:
+        st.success(f"Your LCM guess for {num1} and {num2} is correct! The LCM is {lcm}. +3 points")
+    else:
+        st.warning(f"Your LCM guess for {num1} and {num2} is incorrect. The correct LCM is {lcm}.")
+
+# Show the total score
+st.write(f"---\nTotal Score: {total_score} / 15")
+
+# Show detailed scores for each question
+for question_id, scores in question_scores.items():
+    st.write(f"Question {question_id}: {scores['total']} points")
+    st.write(f"  - Multiples: {scores['multiples_correct']} points")
+    st.write(f"  - LCM Guess: {scores['lcm_correct']} points")
+
+
+
+
+
+
+
+
+
+
 
 
 # Factor Trees
@@ -303,6 +405,7 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
 
 
