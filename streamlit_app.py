@@ -359,12 +359,12 @@ col1, col2 = st.columns([1.1, 7])
 with col1:
     # Display provided binary values for the first 3 rows (disabled inputs)
     for idx in range(3):  # Show the first three fixed rows
-        unique_key = f"q20_{decimal_values[idx]}_{idx}"
+        unique_key = f"q20_{idx}"
         st.text_input(f"{decimal_values[idx]}", value=provided_binaries[idx], disabled=True, key=unique_key)
     
     # Input fields for the last rows (user can fill in the binary values)
     for idx in range(3, 7):  # Indices 3 to 7
-        unique_key = f"q20_{decimal_values[idx]}_{idx}"
+        unique_key = f"q20_{idx}"
         binary_input = st.text_input(f"{decimal_values[idx]}", key=unique_key)
         
         # Validate binary input before appending to the list
@@ -398,7 +398,127 @@ with col2:
 
 
 
+decimal.getcontext().rounding = decimal.ROUND_HALF_UP
 
+if st.button("Submit Test"):
+    if not nickname or not student_number:
+        st.error("Please fill in your nickname and student number.")
+    else:
+        # Build submission record
+        submission = {
+            "nickname": nickname,
+            "student_number": student_number,
+            
+            "answers": {
+                "sudoku": [st.session_state.get("board4x4", ""), st.session_state.get("board6x6", ""],
+
+                "blocks": {
+                    # Tower inputs (6 towers × 3 blocks)
+                    "towers": {
+                        f"tower{i}": [
+                            st.session_state.get(f"tower{i}_block0", ""),
+                            st.session_state.get(f"tower{i}_block1", ""),
+                            st.session_state.get(f"tower{i}_block2", "")
+                        ]
+                        for i in range(6)
+                    },
+                    # Q4 to Q7 multiple choice answers
+                    **{f"q{q}": st.session_state.get(f"q{q}", "") for q in range(4, 7)}
+                },
+                
+                "code": {
+                    # Q7 to Q10 multiple choice answers
+                    **{f"q{q}": st.session_state.get(f"q{q}", "") for q in range(7, 11)}
+                },
+
+                # Part III: LCM
+                "lcm": {
+                    "multiples_num1_11": st.session_state.get("multiples_num1_11", ""),
+                    "multiples_num2_11": st.session_state.get("multiples_num2_11", ""),
+                    "lcm_guess_11": st.session_state.get("lcm_guess_11", ""),
+
+                    "multiples_num1_12": st.session_state.get("multiples_num1_12", ""),
+                    "multiples_num2_12": st.session_state.get("multiples_num2_12", ""),
+                    "lcm_guess_12": st.session_state.get("lcm_guess_12", ""),
+
+                    "multiples_num1_13": st.session_state.get("multiples_num1_13", ""),
+                    "multiples_num2_13": st.session_state.get("multiples_num2_13", ""),
+                    "lcm_guess_13": st.session_state.get("lcm_guess_13", ""),
+
+                    "factor_tree": st.session_state.get("factor_tree", ""),
+                },
+
+                "binary": {
+                    
+                    "bin_sum_16": st.session_state.get("bin_sum_16", ""),
+                    "bin_sum_17": st.session_state.get("bin_sum_17", ""),
+                    "div2_steps_q18": st.session_state.get("div2_steps_q18", ""),
+                    "binary_q18": st.session_state.get("binary_q18", ""),
+                    "div2_steps_q19": st.session_state.get("div2_steps_q19", ""),
+                    "binary_q19": st.session_state.get("binary_q19", ""),
+                    **{f"q{q}": st.session_state.get(f"q20_{q}", "") for q in range(3, 7)},
+                }
+            }
+                    }
+
+        
+        # Save to file
+        import json, os
+        os.makedirs("submissions", exist_ok=True)
+        
+        import gspread
+        from google.oauth2.service_account import Credentials
+
+        # Set up creds and open your sheet
+        scopes = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+        
+        # Load credentials from Streamlit secrets
+        service_account_info = st.secrets["gcp_service_account"]
+        creds = Credentials.from_service_account_info(service_account_info, scopes=scopes)
+        
+        client = gspread.authorize(creds)
+        import datetime
+        
+        # Timestamp for filenames and sheets
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        filename_ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+
+        
+        json_path = f'{selected_class.replace("/", "-")}_{nickname}_{student_number}_{filename_ts}.json'
+        with open(json_path, "w") as f:
+            json.dump(submission, f, indent=2)
+            
+        
+
+        # try:
+        #     sheet = client.open("Final").worksheet(selected_class)
+        # except gspread.WorksheetNotFound:
+        #     st.error(f"Worksheet '{selected_class}' not found. Please check your Google Sheet.")
+
+        # Convert your submission dict into a list of values (flatten if needed)
+        # row = [
+        #     submission["student_number"],
+        #     submission["nickname"],
+        #     submission["scores"]["part1_sudoku"],
+        #     submission["scores"]["part2_code"],
+        #     submission["scores"]["part3_gcf"],
+        #     submission["scores"]["part4_graphs"],
+        #     submission["scores"]["total"],
+        #     timestamp
+        #     # add other fields or stringify answers if needed
+        # ]
+
+        # sheet.append_row(row)
+        # st.success("Submission sent to Google Sheets! ✅")
+        # st.success(f"Submission received! ✅ Total Score: {round(total)}/20")
+        
+        with open(json_path, "rb") as f:
+            st.download_button(
+            "Download answers",
+                data=f,
+                file_name=os.path.basename(json_path),
+                mime="application/json"
+            )
 
 
 
