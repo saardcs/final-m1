@@ -258,14 +258,14 @@ binary_inputs_q20 = []
 col1, col2 = st.columns([1.1, 7])
 
 with col1:
-    # Display provided binary values for the first 3 rows (disable the inputs)
-    for i, decimal_value in enumerate(decimal_values[:3]):
+    # Display provided binary values for the first rows (disable the inputs)
+    for i, decimal_value in enumerate(decimal_values[:5]):
         # Use disabled text inputs to keep height alignment
         st.text_input(f"{decimal_value}", value=provided_binaries[i], disabled=True)#, label_visibility="collapsed")
     
-    # Input fields for the last 5 rows (user can fill in the binary values)
+    # Input fields for the last rows (user can fill in the binary values)
     binary_inputs_q20 = []
-    for idx in range(3, 8):
+    for idx in range(5, 8):
         # Ensure that the key is unique by including both the decimal value and its index
         unique_key = f"q20_{decimal_values[idx]}_{idx}"  # Add the index to make the key unique
         binary_input = st.text_input(f"{decimal_values[idx]}", key=unique_key)
@@ -292,6 +292,7 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
 
 
