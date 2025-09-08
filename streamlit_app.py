@@ -139,6 +139,8 @@ for question_id, (num1, num2) in lcm_questions.items():
     
     # Input for LCM guess
     lcm_guess = st.text_input(f"LCM of {num1} and {num2}:", key=f"lcm_guess_{question_id}")
+    st.write("")
+    st.write("")
     
     # Store user inputs
     user_multiples = {
@@ -528,6 +530,7 @@ if st.button("Submit Test"):
                 file_name=os.path.basename(json_path),
                 mime="application/json"
             )
+
 
 
 
