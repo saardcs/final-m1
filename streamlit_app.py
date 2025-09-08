@@ -152,23 +152,19 @@ if "input_error_q18" not in st.session_state:
 def add_div2_step_q18():
     raw = st.session_state.div2_input_q18.strip()
     try:
-        left, right = raw.split("=")
-        quotient_part, remainder_part = right.strip().split("R")
-        dividend = int(left.strip().split("÷")[0])
-        divisor = int(left.strip().split("÷")[1])
-        quotient = int(quotient_part.strip())
-        remainder = int(remainder_part.strip())
-
-        # Optional: Check if it's really dividing by 2
+        dividend, divisor = map(int, raw.split("/"))
         if divisor != 2:
             st.session_state.input_error_q18 = "❌ You must divide by 2."
             return
+
+        quotient = dividend // 2
+        remainder = dividend % 2
 
         st.session_state.div2_steps_q18.append(f"{dividend} ÷ 2 = {quotient} R{remainder}")
         st.session_state.div2_input_q18 = ""
         st.session_state.input_error_q18 = ""
     except:
-        st.session_state.input_error_q18 = "❌ Invalid format. Use e.g., 9 ÷ 2 = 4 R1"
+        st.session_state.input_error_q18 = "❌ Invalid format. Use e.g., 9/2"
 
 def remove_last_div2_step_q18():
     if st.session_state.div2_steps_q18:
@@ -205,22 +201,20 @@ if "input_error_q19" not in st.session_state:
 def add_div2_step_q19():
     raw = st.session_state.div2_input_q19.strip()
     try:
-        left, right = raw.split("=")
-        quotient_part, remainder_part = right.strip().split("R")
-        dividend = int(left.strip().split("÷")[0])
-        divisor = int(left.strip().split("÷")[1])
-        quotient = int(quotient_part.strip())
-        remainder = int(remainder_part.strip())
-
+        dividend, divisor = map(int, raw.split("/"))
         if divisor != 2:
             st.session_state.input_error_q19 = "❌ You must divide by 2."
             return
+
+        quotient = dividend // 2
+        remainder = dividend % 2
 
         st.session_state.div2_steps_q19.append(f"{dividend} ÷ 2 = {quotient} R{remainder}")
         st.session_state.div2_input_q19 = ""
         st.session_state.input_error_q19 = ""
     except:
-        st.session_state.input_error_q19 = "❌ Invalid format. Use e.g., 21 ÷ 2 = 10 R1"
+        st.session_state.input_error_q19 = "❌ Invalid format. Use e.g., 21/2"
+
 
 def remove_last_div2_step_q19():
     if st.session_state.div2_steps_q19:
@@ -296,5 +290,6 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
 
