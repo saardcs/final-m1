@@ -330,7 +330,8 @@ with cols[1]:
 binary_q19 = st.text_input("Binary result for 21:", placeholder="Enter binary number (e.g., 10101)", key="binary_q19")
 
 
-# Q20
+# Q20: Convert each decimal number into a 7-bit binary number to complete the image.
+
 st.write("20. Convert each decimal number into a 7-bit binary number to complete the image.")
 
 # Decimals with partial conversions provided (first 2 rows fixed)
@@ -368,11 +369,15 @@ with col1:
         binary_input = st.text_input(f"{decimal_values[idx]}", key=unique_key)
         
         # Validate binary input before appending to the list
-        is_valid, validated_input = validate_binary_input(binary_input)
-        if not is_valid:
-            st.warning(validated_input)  # Show a warning if invalid input
+        if binary_input:  # Only validate if input is not empty
+            is_valid, validated_input = validate_binary_input(binary_input)
+            if not is_valid:
+                st.warning(validated_input)  # Show a warning if invalid input
+            else:
+                binary_inputs_q20.append(validated_input)
         else:
-            binary_inputs_q20.append(validated_input)
+            # If input is empty, we just leave the field unvalidated
+            binary_inputs_q20.append("")
 
 def decode_binary_to_image(bin_list):
     """Convert list of 7-bit binary strings into a 7x7 numpy array (pixels)"""
@@ -519,6 +524,7 @@ if st.button("Submit Test"):
                 file_name=os.path.basename(json_path),
                 mime="application/json"
             )
+
 
 
 
