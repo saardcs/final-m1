@@ -246,7 +246,7 @@ decimal_values = [0, 54, 127, 127, 127, 62, 28, 8]
 provided_binaries = [
     format(0, '07b'),
     format(54, '07b'),
-    "", "", "", "", ""
+    "", "", "", "", "", ""
 ]
 
 # Inputs for last 5 binaries (Q20) — keys q20_4 to q20_8 for last five rows (indices 3 to 7)
@@ -290,6 +290,7 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
 
 
