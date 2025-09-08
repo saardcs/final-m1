@@ -132,13 +132,13 @@ for question_id, (num1, num2) in lcm_questions.items():
     correct_multiples_num2 = get_multiples(num2, lcm)
     
     # Input for multiples of num1
-    multiples_num1 = st.text_area(f"Enter the multiples of {num1} (comma-separated):", key=f"multiples_num1_{question_id}")
+    multiples_num1 = st.text_area(f"Multiples of {num1} (comma-separated):", key=f"multiples_num1_{question_id}")
     
     # Input for multiples of num2
-    multiples_num2 = st.text_area(f"Enter the multiples of {num2} (comma-separated):", key=f"multiples_num2_{question_id}")
+    multiples_num2 = st.text_area(f"Multiples of {num2} (comma-separated):", key=f"multiples_num2_{question_id}")
     
     # Input for LCM guess
-    lcm_guess = st.text_input(f"Enter your guess for the LCM of {num1} and {num2}:", key=f"lcm_guess_{question_id}")
+    lcm_guess = st.text_input(f"LCM of {num1} and {num2}:", key=f"lcm_guess_{question_id}")
     
     # Store user inputs
     user_multiples = {
@@ -395,6 +395,7 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
 
 
