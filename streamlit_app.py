@@ -139,124 +139,109 @@ st.write("")
 
 
 
-# Q18
+# Q18 - Decimal 9 to binary
 st.write("**Instruction:** Use the Divide By 2 Method to convert the following decimal numbers into binary.")
+st.write("18. Convert the decimal number **9** into binary.")
 
-st.write("18. Convert the decimal number 9 into binary.")
+if "div2_steps_q18" not in st.session_state:
+    st.session_state.div2_steps_q18 = []
 
+if "input_error_q18" not in st.session_state:
+    st.session_state.input_error_q18 = ""
 
-# Initialize session state
-if "steps" not in st.session_state:
-    st.session_state.steps = []
-if "input_error" not in st.session_state:
-    st.session_state.input_error = ""
-
-# --- Add Step Handler ---
-def add_step():
-    raw = st.session_state.div_input.strip()
+def add_div2_step_q18():
+    raw = st.session_state.div2_input_q18.strip()
     try:
-        num, den = map(int, raw.split("/"))
-        if den == 0:
-            st.session_state.input_error = "❌ Division by zero is not allowed."
+        left, right = raw.split("=")
+        quotient_part, remainder_part = right.strip().split("R")
+        dividend = int(left.strip().split("÷")[0])
+        divisor = int(left.strip().split("÷")[1])
+        quotient = int(quotient_part.strip())
+        remainder = int(remainder_part.strip())
+
+        # Optional: Check if it's really dividing by 2
+        if divisor != 2:
+            st.session_state.input_error_q18 = "❌ You must divide by 2."
             return
-        st.session_state.steps.append({
-            "numerator": num,
-            "denominator": den,
-            "quotient": num // den,
-            "remainder": num % den,
-        })
-        st.session_state.div_input = ""
-        st.session_state.input_error = ""  # Clear error on success
+
+        st.session_state.div2_steps_q18.append(f"{dividend} ÷ 2 = {quotient} R{remainder}")
+        st.session_state.div2_input_q18 = ""
+        st.session_state.input_error_q18 = ""
     except:
-        st.session_state.input_error = "❌ Invalid format. Use e.g., 9/2"
+        st.session_state.input_error_q18 = "❌ Invalid format. Use e.g., 9 ÷ 2 = 4 R1"
 
-# --- Remove Last Step Handler ---
-def remove_last_step():
-    if st.session_state.steps:
-        st.session_state.steps.pop()
+def remove_last_div2_step_q18():
+    if st.session_state.div2_steps_q18:
+        st.session_state.div2_steps_q18.pop()
 
-# --- Show existing steps ---
-for step in st.session_state.steps:
-    st.text(f"{step['numerator']} ÷ {step['denominator']} = {step['quotient']} R {step['remainder']}")
+# Show steps
+for step in st.session_state.div2_steps_q18:
+    st.text(step)
 
-# --- Input and Buttons ---
-st.text_input("Type a division (e.g., 9/2)", key="div_input")
-if st.session_state.input_error:
-    st.warning(st.session_state.input_error)
+# Input and buttons
+st.text_input("Type a division step (e.g., 9 ÷ 2 = 4 R1)", key="div2_input_q18")
+if st.session_state.input_error_q18:
+    st.warning(st.session_state.input_error_q18)
 
 cols = st.columns([1.5, 6])
 with cols[0]:
-    st.button("Add division step", on_click=add_step, key="add_step")
+    st.button("Add division step", on_click=add_div2_step_q18, key="add_div2_step_q18")
 with cols[1]:
-    st.button("Remove last step", on_click=remove_last_step, key="rem_step")
+    st.button("Remove last step", on_click=remove_last_div2_step_q18, key="remove_div2_step_q18")
+
+binary_q18 = st.text_input("Binary result for 9:", placeholder="Enter binary number (e.g., 1001)", key="binary_q18")
 
 
-cols = st.columns([1.1, 7])
-with cols[0]:
-    binary_18 = st.text_input("Answer", key="bin_18")
+# Q19 - Decimal 21 to binary
 st.write("")
-st.write("")
+st.write("19. Convert the decimal number **21** into binary.")
 
+if "div2_steps_q19" not in st.session_state:
+    st.session_state.div2_steps_q19 = []
 
+if "input_error_q19" not in st.session_state:
+    st.session_state.input_error_q19 = ""
 
-
-
-
-# Q19
-st.write("19. Convert the decimal number 21 into binary.")
-
-# Initialize session state
-if "steps2" not in st.session_state:
-    st.session_state.steps2 = []
-if "input_error" not in st.session_state:
-    st.session_state.input_error = ""
-
-# --- Add Step Handler ---
-def add_step():
-    raw = st.session_state.div_input.strip()
+def add_div2_step_q19():
+    raw = st.session_state.div2_input_q19.strip()
     try:
-        num, den = map(int, raw.split("/"))
-        if den == 0:
-            st.session_state.input_error = "❌ Division by zero is not allowed."
+        left, right = raw.split("=")
+        quotient_part, remainder_part = right.strip().split("R")
+        dividend = int(left.strip().split("÷")[0])
+        divisor = int(left.strip().split("÷")[1])
+        quotient = int(quotient_part.strip())
+        remainder = int(remainder_part.strip())
+
+        if divisor != 2:
+            st.session_state.input_error_q19 = "❌ You must divide by 2."
             return
-        st.session_state.steps2.append({
-            "numerator": num,
-            "denominator": den,
-            "quotient": num // den,
-            "remainder": num % den,
-        })
-        st.session_state.div_input = ""
-        st.session_state.input_error = ""  # Clear error on success
+
+        st.session_state.div2_steps_q19.append(f"{dividend} ÷ 2 = {quotient} R{remainder}")
+        st.session_state.div2_input_q19 = ""
+        st.session_state.input_error_q19 = ""
     except:
-        st.session_state.input_error = "❌ Invalid format. Use e.g., 9/2"
+        st.session_state.input_error_q19 = "❌ Invalid format. Use e.g., 21 ÷ 2 = 10 R1"
 
-# --- Remove Last Step Handler ---
-def remove_last_step():
-    if st.session_state.steps2:
-        st.session_state.steps2.pop()
+def remove_last_div2_step_q19():
+    if st.session_state.div2_steps_q19:
+        st.session_state.div2_steps_q19.pop()
 
-# --- Show existing steps ---
-for step in st.session_state.steps2:
-    st.text(f"{step['numerator']} ÷ {step['denominator']} = {step['quotient']} R {step['remainder']}")
+# Show steps
+for step in st.session_state.div2_steps_q19:
+    st.text(step)
 
-# --- Input and Buttons ---
-st.text_input("Type a division (e.g., 9/2)", key="div_input2")
-if st.session_state.input_error:
-    st.warning(st.session_state.input_error)
+# Input and buttons
+st.text_input("Type a division step (e.g., 21 ÷ 2 = 10 R1)", key="div2_input_q19")
+if st.session_state.input_error_q19:
+    st.warning(st.session_state.input_error_q19)
 
 cols = st.columns([1.5, 6])
 with cols[0]:
-    st.button("Add division step", on_click=add_step, key="add_step2")
+    st.button("Add division step", on_click=add_div2_step_q19, key="add_div2_step_q19")
 with cols[1]:
-    st.button("Remove last step", on_click=remove_last_step, key="rem_step2")
+    st.button("Remove last step", on_click=remove_last_div2_step_q19, key="remove_div2_step_q19")
 
-
-cols = st.columns([1.1, 7])
-with cols[0]:
-    binary_19 = st.text_input("Answer", key="bin_19")
-
-st.write("")
-st.write("")
+binary_q19 = st.text_input("Binary result for 21:", placeholder="Enter binary number (e.g., 10101)", key="binary_q19")
 
 
 # Q20
@@ -311,4 +296,5 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
