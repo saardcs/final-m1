@@ -246,9 +246,6 @@ decimal_values = [0, 54, 127, 127, 127, 62, 28, 8]
 provided_binaries = [
     format(0, '07b'),
     format(54, '07b'),
-    format(127, '07b'),
-    format(127, '07b'),
-    format(127, '07b'),
     "", "", "", "", ""
 ]
 
@@ -259,14 +256,14 @@ col1, col2 = st.columns([1.1, 7])
 
 with col1:
     # Display provided binary values for the first rows (disable the inputs)
-    for idx, decimal_value in enumerate(decimal_values[:5]):
+    for idx, decimal_value in enumerate(decimal_values[:2]):
         # Use disabled text inputs to keep height alignment
         unique_key = f"q20_{decimal_values[idx]}_{idx}"
         st.text_input(f"{decimal_value}", value=provided_binaries[i], disabled=True, key=unique_key)#, label_visibility="collapsed")
     
     # Input fields for the last rows (user can fill in the binary values)
     binary_inputs_q20 = []
-    for idx in range(5, 8):
+    for idx in range(2, 8):
         # Ensure that the key is unique by including both the decimal value and its index
         unique_key = f"q20_{decimal_values[idx]}_{idx}"  # Add the index to make the key unique
         binary_input = st.text_input(f"{decimal_values[idx]}", key=unique_key)
@@ -283,7 +280,7 @@ def decode_binary_to_image(bin_list):
     return pixels
 
 # Combine the provided and user inputs (use user inputs for rows 4 to 8)
-full_binary_list = provided_binaries[:5] + binary_inputs_q20
+full_binary_list = provided_binaries[:2] + binary_inputs_q20
 img_pixels = decode_binary_to_image(full_binary_list)
 
 with col2:
@@ -293,6 +290,7 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
 
 
