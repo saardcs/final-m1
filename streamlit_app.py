@@ -135,7 +135,7 @@ for question_id, (num1, num2) in lcm_questions.items():
     multiples_num1 = st.text_area(f"Multiples of {num1} (comma-separated):", placeholder=f"{num1}, {num1*2}, {num1*3}...", key=f"multiples_num1_{question_id}")
     
     # Input for multiples of num2
-    multiples_num2 = st.text_area(f"Multiples of {num2} (comma-separated):", placeholder=f"{num1}, {num1*2}, {num1*3}...", key=f"multiples_num2_{question_id}")
+    multiples_num2 = st.text_area(f"Multiples of {num2} (comma-separated):", placeholder=f"{num2}, {num2*2}, {num2*3}...", key=f"multiples_num2_{question_id}")
     
     # Input for LCM guess
     lcm_guess = st.text_input(f"LCM of {num1} and {num2}:", key=f"lcm_guess_{question_id}")
@@ -524,6 +524,7 @@ if st.button("Submit Test"):
                 file_name=os.path.basename(json_path),
                 mime="application/json"
             )
+
 
 
 
