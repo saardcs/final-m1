@@ -283,7 +283,7 @@ def decode_binary_to_image(bin_list):
     return pixels
 
 # Combine the provided and user inputs (use user inputs for rows 4 to 8)
-full_binary_list = provided_binaries[:3] + binary_inputs_q20
+full_binary_list = provided_binaries[:5] + binary_inputs_q20
 img_pixels = decode_binary_to_image(full_binary_list)
 
 with col2:
@@ -293,6 +293,7 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
 
 
