@@ -241,14 +241,23 @@ binary_q19 = st.text_input("Binary result for 21:", placeholder="Enter binary nu
 # Q20
 st.write("20. Convert each decimal number into a 7-bit binary number to complete the image.")
 
-# Decimals with partial conversions provided (first 3 rows fixed)
+# Decimals with partial conversions provided (first 2 rows fixed)
 decimal_values = [93, 93, 0, 21, 73, 8, 8]
 provided_binaries = [
-    format(93, '07b'),
-    format(93, '07b'),
-    format(0, '07b'),
-    "", "", "", ""
+    format(93, '07b'),       # Fixed: 93
+    format(93, '07b'),       # Fixed: 93
+    format(0, '07b'),        # Fixed: 0
+    "", "", "", ""           # User inputs for the last 5 rows (2 to 6)
 ]
+
+def validate_binary_input(user_input):
+    """Validate and trim the binary input."""
+    user_input = user_input.strip()  # Remove leading/trailing whitespaces
+    if len(user_input) != 7:
+        return False, "❌ Input must be exactly 7 digits."
+    if not all(c in '01' for c in user_input):
+        return False, "❌ Only 0 or 1 are allowed."
+    return True, user_input  # Valid input, return the trimmed value
 
 # Inputs for last 5 binaries (Q20) — keys q20_4 to q20_8 for last five rows (indices 3 to 7)
 binary_inputs_q20 = []
@@ -256,22 +265,25 @@ binary_inputs_q20 = []
 col1, col2 = st.columns([1.1, 7])
 
 with col1:
-    # Display provided binary values for the first rows (disable the inputs)
-    for idx, decimal_value in enumerate(decimal_values[:3]):
-        # Use disabled text inputs to keep height alignment
+    # Display provided binary values for the first 3 rows (disabled inputs)
+    for idx in range(3):  # Show the first three fixed rows
         unique_key = f"q20_{decimal_values[idx]}_{idx}"
-        st.text_input(f"{decimal_value}", value=provided_binaries[i], disabled=True, key=unique_key)#, label_visibility="collapsed")
+        st.text_input(f"{decimal_values[idx]}", value=provided_binaries[idx], disabled=True, key=unique_key)
     
     # Input fields for the last rows (user can fill in the binary values)
-    binary_inputs_q20 = []
-    for idx in range(3, 7):
-        # Ensure that the key is unique by including both the decimal value and its index
-        unique_key = f"q20_{decimal_values[idx]}_{idx}"  # Add the index to make the key unique
+    for idx in range(3, 7):  # Indices 3 to 7
+        unique_key = f"q20_{decimal_values[idx]}_{idx}"
         binary_input = st.text_input(f"{decimal_values[idx]}", key=unique_key)
-        binary_inputs_q20.append(binary_input)
+        
+        # Validate binary input before appending to the list
+        is_valid, validated_input = validate_binary_input(binary_input)
+        if not is_valid:
+            st.warning(validated_input)  # Show a warning if invalid input
+        else:
+            binary_inputs_q20.append(validated_input)
 
 def decode_binary_to_image(bin_list):
-    """Convert list of 8 binary strings (8-bit each) into a 8x8 numpy array (pixels)"""
+    """Convert list of 7-bit binary strings into a 7x7 numpy array (pixels)"""
     pixels = np.zeros((7, 7))
     for i, b in enumerate(bin_list):
         if len(b) == 7 and all(c in '01' for c in b):
@@ -291,9 +303,6 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
-
-
-
 
 
 
