@@ -147,16 +147,15 @@ for question_id, (num1, num2) in lcm_questions.items():
     }
     user_lcm_guess = lcm_guess.strip()
 
-    # Grading multiples (check if all multiples are valid up to the LCM)
-    multiples_num1_valid = all(m in correct_multiples_num1 for m in user_multiples["num1"])
-    multiples_num2_valid = all(m in correct_multiples_num2 for m in user_multiples["num2"])
+    # Check if the LCM is listed in either of the multiples
+    lcm_correct = str(lcm) in [str(x) for x in user_multiples["num1"]] or str(lcm) in [str(x) for x in user_multiples["num2"]]
     
     # Grading the LCM guess
-    lcm_correct = user_lcm_guess == str(lcm)
+    lcm_guess_correct = user_lcm_guess == str(lcm)
     
-    # Calculate points
-    points_for_multiples = 2 if multiples_num1_valid and multiples_num2_valid else 0
-    points_for_lcm = 3 if lcm_correct else 0
+    # Points for listing multiples (must include the LCM in either list)
+    points_for_multiples = 2 if lcm_correct else 0
+    points_for_lcm = 3 if lcm_guess_correct else 0
     
     total_score += points_for_multiples + points_for_lcm
     
@@ -170,15 +169,15 @@ for question_id, (num1, num2) in lcm_questions.items():
     # Provide feedback for each question
     st.write(f"---\nQuestion {question_id}:")
     
-    if multiples_num1_valid and multiples_num2_valid:
-        st.success(f"Multiples for {num1} and {num2} are correct! +2 points")
-    else:
-        st.warning(f"One or both sets of multiples are incorrect.")
-    
     if lcm_correct:
-        st.success(f"Your LCM guess for {num1} and {num2} is correct! The LCM is {lcm}. +3 points")
+        st.success(f"Your multiples include the LCM! +2 points")
     else:
-        st.warning(f"Your LCM guess for {num1} and {num2} is incorrect. The correct LCM is {lcm}.")
+        st.warning(f"Your multiples do not include the LCM. The LCM is {lcm}.")
+    
+    if lcm_guess_correct:
+        st.success(f"Your LCM guess is correct! +3 points")
+    else:
+        st.warning(f"Your LCM guess is incorrect. The correct LCM is {lcm}.")
 
 # Show the total score
 st.write(f"---\nTotal Score: {total_score} / 15")
@@ -405,6 +404,7 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
 
 
