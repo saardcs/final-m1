@@ -278,6 +278,9 @@ with cols[1]:
     st.button("Remove last step", on_click=remove_last_div2_step_q18, key="remove_div2_step_q18")
 
 binary_q18 = st.text_input("Binary result for 9:", placeholder="Enter binary number (e.g., 0010)", key="binary_q18")
+st.write("")
+st.write("")
+
 
 
 # Q19 - Decimal 21 to binary
@@ -331,7 +334,8 @@ binary_q19 = st.text_input("Binary result for 21:", placeholder="Enter binary nu
 
 
 # Q20: Convert each decimal number into a 7-bit binary number to complete the image.
-
+st.write("")
+st.write("")
 st.write("20. Convert each decimal number into a 7-bit binary number to complete the image.")
 
 # Decimals with partial conversions provided (first 2 rows fixed)
@@ -524,6 +528,7 @@ if st.button("Submit Test"):
                 file_name=os.path.basename(json_path),
                 mime="application/json"
             )
+
 
 
 
