@@ -410,7 +410,7 @@ if st.button("Submit Test"):
             "student_number": student_number,
             
             "answers": {
-                "sudoku": [st.session_state.get("board4x4", ""), st.session_state.get("board6x6", ""],
+                "sudoku": [st.session_state.get("board4x4", ""), st.session_state.get("board6x6", "")],
 
                 "blocks": {
                     # Tower inputs (6 towers × 3 blocks)
@@ -519,6 +519,7 @@ if st.button("Submit Test"):
                 file_name=os.path.basename(json_path),
                 mime="application/json"
             )
+
 
 
 
