@@ -175,7 +175,7 @@ for step in st.session_state.div2_steps_q18:
     st.text(step)
 
 # Input and buttons
-st.text_input("Type a division step (e.g., 9 ÷ 2 = 4 R1)", key="div2_input_q18")
+st.text_input("Type a division step (e.g., 9/2)", key="div2_input_q18")
 if st.session_state.input_error_q18:
     st.warning(st.session_state.input_error_q18)
 
@@ -225,7 +225,7 @@ for step in st.session_state.div2_steps_q19:
     st.text(step)
 
 # Input and buttons
-st.text_input("Type a division step (e.g., 21 ÷ 2 = 10 R1)", key="div2_input_q19")
+st.text_input("Type a division step (e.g., 21/2)", key="div2_input_q19")
 if st.session_state.input_error_q19:
     st.warning(st.session_state.input_error_q19)
 
@@ -290,6 +290,7 @@ with col2:
     ax.set_yticks([])
 
     st.pyplot(fig)
+
 
 
 
