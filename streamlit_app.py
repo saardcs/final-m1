@@ -5,7 +5,7 @@ import json
 import re
 import numpy as np
 import matplotlib.pyplot as plt
-from decimal import Decimal, ROUND_HALF_UP
+import decimal
 import gspread
 from google.oauth2.service_account import Credentials
 import datetime
@@ -334,7 +334,7 @@ binary_q19 = st.text_input("Binary result for 21:", placeholder="Enter binary nu
 st.write("20. Convert each decimal number into a 7-bit binary number to complete the image.")
 
 # Decimals with partial conversions provided (first 2 rows fixed)
-decimal_values = [93, 93, 0, 21, 73, 8, 8]
+decimal_values = [93, 93, 0, 42, 73, 8, 8]
 provided_binaries = [
     format(93, '07b'),       # Fixed: 93
     format(93, '07b'),       # Fixed: 93
@@ -519,6 +519,7 @@ if st.button("Submit Test"):
                 file_name=os.path.basename(json_path),
                 mime="application/json"
             )
+
 
 
 
